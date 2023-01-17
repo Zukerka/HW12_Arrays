@@ -9,7 +9,9 @@
 <body>
     <script>
 
-        var notification = [
+        'use strict'
+
+        const notification = [
 
         {
         date: '31/07/2019',
@@ -24,18 +26,48 @@
         },
 
         {
+        date: '30/07/2019',
+        text: 'New message here',
+        source: 'facebook'
+        },
+
+        {
         date: '31/07/2019',
         text: 'Insta message here',
         source: 'instagram'
         },
+
+        {
+        date: '29/07/2019',
+        text: 'Some message here',
+        source: 'twitter'
+        },
         ]; 
         
 
-        const groupBy = function(arr){
-            return arr.sort(item => arr)
-        }
+        const groupBy = function (source){
+            let map = notification.reduce( (acc, cur) => {
 
-        console.log(groupBy(notification)); 
+                acc[cur.source] = acc[cur.source] || {
+                    source: cur.source, 
+                    texts: [],
+                    dates: [],
+                } 
+                
+                acc[cur.source].texts.push(cur.text); 
+                acc[cur.source].dates.push(cur.date); 
+
+                return acc;  
+
+            }, {})
+
+            // return map; 
+            let results = Object.values(map); 
+            return results;  
+        }
+            
+
+        console.log(groupBy('twitter')); 
 
     </script>
 </body>
